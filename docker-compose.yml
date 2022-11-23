@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  api1:
+    build: ./
+    ports:
+      - "9001:80"
+    environment:
+      SERVER: "sqlserver"
+      PORT: 1433
+      DATABASE: "PsicologoDB"
+      USERNAME: "sa"
+      PASSWORD: "Channel123*"
+
+    depends_on:
+      - db
+    links:
+      - "db"
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    user: "0:0"
+    hostname: "sqlserver"
+    environment:
+      SA_PASSWORD: "Channel123*"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - data:/var/opt/mssql/data
+volumes:
+  data:
